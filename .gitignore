@@ -1,0 +1,9 @@
+.idea
+*.sketch
+*.fig
+*.xd
+.DS_Store
+.prettierignore
+/node_modules
+/public/styles.css
+/public/script.js
