@@ -38,3 +38,13 @@
     font-weight: 700;
     src: url("../public/assets/fonts/lora/static/Lora-Bold.ttf") format('ttf');
 }
+
+.toggle-checkbox:checked {
+    @apply: right-0 border-primary;
+    right: 0;
+    border-color: #A445ED;
+}
+.toggle-checkbox:checked + .toggle-label {
+    @apply: bg-primary;
+    background-color: #A445ED;
+}
