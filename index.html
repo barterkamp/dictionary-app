@@ -11,7 +11,7 @@
 <div id="page-wrapper" >
 
     <!--Header section-->
-    <header class="container mx-auto mt-6 sm:mt-16 px-6 border border-primary flex justify-between">
+    <header class="container mx-auto mt-6 sm:mt-16 px-6  flex justify-between">
 
     <!--logo container-->
       <div id="logo">
@@ -26,7 +26,7 @@
       <div id="select-container" class="flex items-center">
 
         <!-- select fonts-->
-        <div id="select-font" class="px-4">
+        <div id="select-font" class="px-4" >
         <label for="fontFamilies" class="hidden">Select a font family</label>
         <select x-model="$store.globals.selectFont" id="fontFamilies" class="font-bold bg-white text-gray-900 text-s block p-2.5" :class="$store.globals.darkMode && 'bg-darkmode-400 text-white'">
           <option class="font-bold font-inter" selected value="inter">Sans Serif</option>
@@ -36,7 +36,7 @@
         </div>
 
         <!--toggle darkmode-->
-        <div id="select-darkmode" class="flex items-center gap-2 border-l-1 border-l-neutral-500 px-4 py-2">
+        <div id="select-darkmode" class="flex items-center gap-2 border-l-2 border-l-lightgray-100 px-4 py-2">
           <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
             <input @click="$store.globals.toggle()" type="checkbox" name="darkModeToggle" id="darkModeToggle" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-lightgray-400 appearance-none cursor-pointer"/>
             <label for="darkModeToggle" class="toggle-label block overflow-hidden h-5 rounded-full bg-lightgray-400 cursor-pointer"></label>
@@ -50,8 +50,19 @@
     </header>
 
 
-<section class="mt-14 container mx-auto">
-  <p :class="`font-${$store.globals.selectFont} border border-amber-800`">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam asperiores consequatur culpa cum ea, enim et laborum laudantium maxime nam nesciunt possimus rem sint tempore totam vel vero voluptas voluptates! Ab accusamus accusantium aspernatur culpa dolor enim esse est expedita inventore ipsa laborum nesciunt nihil provident quidem recusandae tenetur ullam, voluptatum? Asperiores aspernatur cum cumque deserunt dolorem doloremque ea enim illum iure iusto laborum minus nemo, odio quidem quisquam similique suscipit voluptatum. Corporis, enim hic laborum non porro quos reiciendis similique voluptatibus! Ab, accusamus architecto autem distinctio dolorem earum eos, ex facilis harum hic iure labore libero nemo odio quidem repellat, suscipit tempora tenetur ullam vel! Eveniet, non voluptatum. Animi dolor dolorum mollitia necessitatibus vitae? Ex exercitationem hic iste iure libero neque quae tempore? Aliquid autem earum est expedita fugiat, fugit harum illo inventore ipsa itaque iure minus modi omnis possimus quidem quisquam repellendus sapiente totam unde veniam veritatis vitae voluptas? Accusamus adipisci aspernatur culpa dicta doloremque eaque fugit harum hic illo ipsa, laborum laudantium nulla provident quam quis, repellendus velit? Architecto at, consequuntur dignissimos earum harum, ipsum laborum libero molestiae molestias nam natus quod quos reiciendis velit, vero? Accusamus aliquam aperiam asperiores assumenda beatae commodi delectus dicta doloribus eaque eius eligendi error esse et eum ex excepturi exercitationem facere hic iure labore laboriosam laborum maiores minima mollitia nesciunt perferendis quaerat qui, reiciendis, repellat repellendus reprehenderit saepe similique, temporibus vel veniam veritatis vero! A adipisci aliquam amet at blanditiis debitis dolor doloremque dolorum, esse eum facere harum laboriosam laborum maxime molestiae officiis quo sapiente sint sunt tempora tenetur unde, veritatis voluptatibus. Adipisci, aliquid amet animi aspernatur debitis eius error facilis id incidunt natus necessitatibus placeat porro praesentium qui quis quod voluptatibus. Animi consequatur, corporis culpa eum excepturi explicabo facere fugit illum impedit laboriosam magni mollitia nisi nobis officia pariatur perferendis quo quod, sequi sunt vitae! Ab accusamus alias asperiores assumenda at aut distinctio expedita explicabo harum, hic illo illum incidunt inventore ipsam iusto libero, maxime pariatur porro quae quibusdam quisquam ratione recusandae reiciendis saepe sed similique temporibus tenetur, veniam voluptas voluptatibus. Accusamus alias amet at aut blanditiis consequuntur corporis cumque delectus dolores esse, est eveniet facilis fugit, hic illum impedit ipsum laboriosam laborum laudantium maiores mollitia, nam nihil non numquam officia perferendis qui quibusdam quis quisquam quod ratione recusandae tempore temporibus ullam unde veritatis voluptatum? Distinctio error ipsam mollitia nemo quo. Accusamus impedit incidunt minima nisi reprehenderit unde! Culpa, tenetur!</p>
+<section class="container mx-auto px-6 mt-6 sm:mt-14" >
+    <div id="searchbar" :class="`font-${$store.globals.selectFont} font-bold sm:text-l relative w-full`">
+        <input type="text"
+               name="search"
+               placeholder="Search English"
+               id="search"
+               :class="$store.globals.darkMode ? 'bg-darkmode-300' : 'bg-lightgray-100'" class="py-4 px-6 rounded-2xl w-full">
+        <button class="absolute top-0 right-10 top-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                <path fill="none" stroke="#A445ED" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m12.663 12.663 3.887 3.887M1 7.664a6.665 6.665 0 1 0 13.33 0 6.665 6.665 0 0 0-13.33 0Z"
+            /></svg>
+        </button>
+    </div>
 </section>
 
 
