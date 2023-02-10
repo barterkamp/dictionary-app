@@ -4,6 +4,9 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="./public/styles.css">
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
       <title> Dictionary web app | coded by Bart Erkamp</title>
     </head>
         <body x-data :class="$store.globals.darkMode && 'bg-darkmode-400 text-white'">
@@ -19,6 +22,7 @@
                         <path d="M11 9h12"/></g>
                     </svg>
                   </div>
+
 
                     <!-- Selections container-->
 
@@ -53,7 +57,6 @@
 
                 <main class="container mx-auto px-6 mt-6 sm:mt-14" >
 
-
                     <!--Searchbar-->
 
                     <div id="searchbar" :class="`font-${$store.globals.selectFont} font-bold text-s sm:text-m relative w-full`">
@@ -71,7 +74,9 @@
                             /></svg>
                         </button>
                     </div>
-                    <p x-show="$store.globals.setError && $store.globals.word.length === 0" class="text-error mt-2">Whoops, can't be empty</p>
+
+                    <!-- Error message-->
+                    <p x-cloak x-show="$store.globals.setError && $store.globals.word.length === 0" class="text-error mt-2">Whoops, can't be empty</p>
 
                     <!-- Output-->
 
@@ -85,28 +90,41 @@
                             <p class="font-base font-inter text-m text-lightgray-400" x-text="$store.globals.errorMessage.resolution"></p>
                         </div>
 
-                        <!--loop through words array-->
+                        <!--Loop through words array-->
 
                         <template x-for="word in $store.globals.words">
                                 <!-- Get word key from words array -->
                             <div>
-                                <h1 x-text="word.word" class="text-xl md:text-2xl font-bold mt-6 mb-2"></h1>
-                                <p x-text="word.phonetic" class="text-primary mb-8"></p>
+                                <div class="flex justify-between items-center">
                                     <div>
-                                        <!-- nested loop which loops through meanings array-->
+                                        <h1 x-text="word.word" class="text-xl md:text-2xl font-bold mt-6 mb-2"></h1>
+                                        <p x-text="word.phonetic" class="text-primary"></p>
+                                    </div>
+                                    <!--Play icon-->
+                                    <div>
+                                        <svg class="w-12 sm:w-20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 75 75"><g fill="#A445ED" fill-rule="evenodd"><circle cx="37.5" cy="37.5" r="37.5" opacity=".25"/><path d="M29 27v21l21-10.5z"/></g></svg>
+                                    </div>
+                                </div>
+                                    <div>
+                                        <!-- Loop through meanings array-->
                                         <template x-for="meaning in word.meanings">
                                             <div>
-                                                <div class="flex items-center gap-8 mb-8">
-                                                    <h2 x-text="meaning.partOfSpeech" class="text-m font-bold italic "></h2>
+                                                <div class="flex items-center gap-8 my-8">
+                                                    <h2 x-text="meaning.partOfSpeech" class="text-m font-bold italic"></h2>
                                                     <div :class="$store.globals.darkMode ? 'bg-darkmode-100' : 'bg-lightgray-500'" class=" h-px flex-1"></div>
                                                 </div>
+
                                                 <h3 class="text-lightgray-400 text-base mb-4">Meaning</h3>
                                                     <ul class="flex flex-col gap-3.5 text-s sm:text-m text-darkmode-200 marker:text-primary list-disc ml-4 mb-6">
-                                                        <!-- nested loop which loops through definitions array -->
+
+                                                        <!-- Loops through definitions array -->
+
                                                         <template x-for="definition in meaning.definitions">
                                                             <li x-text="definition.definition" :class="$store.globals.darkMode && 'text-white'"></li>
                                                         </template>
                                                     </ul>
+
+
                                                     <div>
                                                         <template x-for="definition in meaning.definitions">
                                                             <p x-text='definition.example ? `"${definition.example}"` : ""' class="mt-3.5 mb-4 ml-6 text-lightgray-400 italic"></p>
@@ -115,66 +133,22 @@
                                             </div>
                                         </template>
                                     </div>
-                                <div class="flex flex-col sm:flex-row border-t py-6">
+                                <div class="flex flex-col sm:flex-row border-t py-6 gap-2">
                                     <h4 class="text-s text-lightgray-400 underline">Source</h4>
-                                    <a :href="`${word.sourceUrls}`" x-text="word.sourceUrls" class="text-s inline-block mb-5 underline text-lightgray-400" target="_blank"></a><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><path fill="none" stroke="#838383" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.09 3.545H2.456A1.455 1.455 0 0 0 1 5v6.545A1.455 1.455 0 0 0 2.455 13H9a1.455 1.455 0 0 0 1.455-1.455V7.91m-5.091.727 7.272-7.272m0 0H9m3.636 0V5"/></svg>
+                                    <ul class="flex flex-col gap-2">
+                                        <template x-for="sourceUrl in word.sourceUrls">
+                                            <li class="flex gap-2">
+                                                <a :href="`${sourceUrl}`" x-text="sourceUrl" class="text-s underline text-lightgray-400" target="_blank"></a>
+                                                <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><path fill="none" stroke="#838383" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.09 3.545H2.456A1.455 1.455 0 0 0 1 5v6.545A1.455 1.455 0 0 0 2.455 13H9a1.455 1.455 0 0 0 1.455-1.455V7.91m-5.091.727 7.272-7.272m0 0H9m3.636 0V5"/></svg></span>
+                                            </li>
+                                        </template>
+                                    </ul>
                                 </div>
                             </div>
                         </template>
-
-
-
-<!--<p class="text-lightgray-400 text-base mb-9">Synonyms: <span class="text-primary text-base" x-text="`${meaning.synonyms}` || `No synonyms found`"></span></p>-->
-
-
-                                <!--noun-->
-<!--                                <div>-->
-<!--                                    <h2 x-text="word.meanings[0].partOfSpeech" class="text-m font-bold italic mb-8"></h2>-->
-<!--                                    <h3 class="text-lightgray-400 text-base mb-4">Meaning</h3>-->
-<!--                                        <ul class="flex flex-col gap-3.5 text-s text-base text-darkmode-200 marker:text-primary list-disc ml-6 mb-6">-->
-<!--                                            &lt;!&ndash;loop through definitions array&ndash;&gt;-->
-<!--                                            <template x-for="definitions in word.meanings[0].definitions">-->
-<!--                                                <li x-text="definitions.definition"></li>-->
-<!--                                            </template>-->
-<!--                                        </ul>-->
-<!--                                        <div class="mb-6 flex gap-6">-->
-<!--                                            <h3 class="text-lightgray-400 text-base">Synonyms</h3>-->
-<!--                                            <div>-->
-<!--                                            <template x-for="synonym in word.meanings[0].synonyms">-->
-<!--                                                <span x-text="`${synonym}`" class="text-primary text-base"></span>-->
-<!--                                            </template>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                </div>-->
-
-                                <!--verb-->
-<!--                                <div>-->
-<!--                                    <h2 x-text="word?.meanings[1]?.partOfSpeech" class="text-m font-bold italic mb-8"></h2>-->
-<!--                                    <h3 class="text-lightgray-400 text-base mb-6">Meaning</h3>-->
-<!--                                    <ul class="flex flex-col gap-3.5 text-s text-base text-darkmode-200 marker:text-primary list-disc ml-6 mb-10">-->
-<!--                                        &lt;!&ndash;loop through definitions array&ndash;&gt;-->
-<!--                                        <template x-for="definitions in word.meanings[1]?.definitions">-->
-<!--                                            <li x-text="definitions?.definition"></li>-->
-<!--                                        </template>-->
-<!--                                    </ul>-->
-<!--                                    <p>-->
-<!--                                        <template x-for="definitions in word.meanings[1]?.definitions">-->
-<!--                                            <span x-text="`${definitions.example || ''}`"></span>-->
-<!--                                        </template>-->
-<!--                                    </p>-->
-<!--                                </div>-->
-
-<!--                                <div>-->
-<!--                                    <h4>Source</h4>-->
-<!--                                    <a :href="`${word.sourceUrls}`" x-text="word.sourceUrls"></a>-->
-<!--                                </div>-->
-
                     </section>
-
                 </main>
-
             </div>
-
             <script src="./node_modules/axios/dist/axios.min.js"></script>
         <script src="./public/script.js"></script>
     </body>
