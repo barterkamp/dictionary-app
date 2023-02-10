@@ -6,19 +6,21 @@ window.Alpine = Alpine;
 Alpine.store("globals", {
   selectFont: "inter",
   darkMode: false,
-  setError: false,
+
   toggleDarkmode() {
     this.darkMode = !this.darkMode;
   },
+
   word: "",
   words: [],
-  audioFile: "",
 
+  audioFile: "",
   playAudio() {
     let audio = new Audio(`${this.audioFile}`);
     audio.play();
   },
 
+  setError: false,
   errorMessage: {},
   showErrorMessage: false,
 
@@ -32,20 +34,18 @@ Alpine.store("globals", {
         .then((result) => {
           this.words = result.data;
 
-          // find a single audio file in the phonetics array
+          // Find a single audio file in the phonetics array
           let audioArray = this.words.map((word) =>
             word.phonetics
               .filter((obj) => obj.hasOwnProperty("audio"))
               .find((obj) => obj.audio)
           );
           this.audioFile = audioArray[0]["audio"];
-
           this.showErrorMessage = false;
           this.setError = false;
         })
         .catch((err) => {
           this.errorMessage = err.response.data;
-          console.log(this.errorMessage);
           this.showErrorMessage = true;
           this.words = [];
         });
