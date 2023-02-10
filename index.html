@@ -1,155 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="./public/styles.css">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./public/styles.css" />
         <style>
-            [x-cloak] { display: none !important; }
+            [x-cloak] {
+                display: none !important;
+            }
         </style>
-      <title> Dictionary web app | coded by Bart Erkamp</title>
+        <title>Dictionary web app | coded by Bart Erkamp</title>
     </head>
-        <body x-data :class="$store.globals.darkMode && 'bg-darkmode-400 text-white'">
-            <div id="page-wrapper" >
-                <!--Header section-->
-                <header class="container mx-auto mt-6 sm:mt-16 px-6  flex justify-between">
-
+    <body
+        x-data
+        :class="$store.globals.darkMode && 'bg-darkmode-400 text-white'"
+    >
+        <div id="page-wrapper">
+            <!--Header section-->
+            <header
+                class="container mx-auto mt-6 sm:mt-16 px-6 flex justify-between"
+            >
                 <!--Logo container-->
-                  <div id="logo">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="38" viewBox="0 0 34 38">
-                      <g fill="none" fill-rule="evenodd" stroke="#838383" stroke-linecap="round" stroke-width="1.5">
-                        <path d="M1 33V5a4 4 0 0 1 4-4h26.8A1.2 1.2 0 0 1 33 2.2v26.228M5 29h28M5 37h28"/><path stroke-linejoin="round" d="M5 37a4 4 0 1 1 0-8"/>
-                        <path d="M11 9h12"/></g>
+                <div id="logo">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="34"
+                        height="38"
+                        viewBox="0 0 34 38"
+                    >
+                        <g
+                            fill="none"
+                            fill-rule="evenodd"
+                            stroke="#838383"
+                            stroke-linecap="round"
+                            stroke-width="1.5"
+                        >
+                            <path
+                                d="M1 33V5a4 4 0 0 1 4-4h26.8A1.2 1.2 0 0 1 33 2.2v26.228M5 29h28M5 37h28"
+                            />
+                            <path
+                                stroke-linejoin="round"
+                                d="M5 37a4 4 0 1 1 0-8"
+                            />
+                            <path d="M11 9h12" />
+                        </g>
                     </svg>
-                  </div>
+                </div>
 
+                <!-- Selections container-->
 
-                    <!-- Selections container-->
-
-                  <div id="select-container" class="flex items-center">
-
+                <div id="select-container" class="flex items-center">
                     <!-- Select fonts-->
 
-                    <div id="select-font" class="px-4" >
-                    <label for="fontFamilies" class="hidden">Select a font family</label>
-                    <select x-model="$store.globals.selectFont" id="fontFamilies" class="font-bold text-s block p-2.5 focus:outline-none focus:ring focus:ring-primary"
-                            :class="$store.globals.darkMode ? 'bg-darkmode-400 text-white' : 'bg-white text-gray-900'">
-                      <option class="font-bold font-inter" selected value="inter">Sans Serif</option>
-                      <option class="font-bold font-lora" value="lora">Serif</option>
-                      <option class="font-bold font-inconsolata" value="inconsolata">Mono</option>
-                    </select>
+                    <div id="select-font" class="px-4">
+                        <label for="fontFamilies" class="hidden"
+                            >Select a font family</label
+                        >
+                        <select
+                            x-model="$store.globals.selectFont"
+                            id="fontFamilies"
+                            class="font-bold text-s block p-2.5 focus:outline-none focus:ring focus:ring-primary"
+                            :class="$store.globals.darkMode ? 'bg-darkmode-400 text-white' : 'bg-white text-gray-900'"
+                        >
+                            <option
+                                class="font-bold font-inter"
+                                selected
+                                value="inter"
+                            >
+                                Sans Serif
+                            </option>
+                            <option class="font-bold font-lora" value="lora">
+                                Serif
+                            </option>
+                            <option
+                                class="font-bold font-inconsolata"
+                                value="inconsolata"
+                            >
+                                Mono
+                            </option>
+                        </select>
                     </div>
 
                     <!--Toggle darkmode-->
 
-                    <div id="select-darkmode" class="flex items-center gap-2 border-l-2 border-l-lightgray-100 px-4 py-2">
-                      <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-                        <input @click="$store.globals.toggleDarkmode()" type="checkbox" name="darkModeToggle" id="darkModeToggle" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-lightgray-400 appearance-none cursor-pointer "/>
-                        <label for="darkModeToggle" class="toggle-label block overflow-hidden h-5 rounded-full bg-lightgray-400 cursor-pointer"></label>
-                      </div>
-                      <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 22 22">
-                          <path fill="none" :stroke="$store.globals.darkMode ? '#A445ED' : '#838383'" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M1 10.449a10.544 10.544 0 0 0 19.993 4.686C11.544 15.135 6.858 10.448 6.858 1A10.545 10.545 0 0 0 1 10.449Z"/></svg>
-                      </div>
-                    </div>
-                  </div>
-                </header>
-
-                <main class="container mx-auto px-6 mt-6 sm:mt-14" >
-
-                    <!--Searchbar-->
-
-                    <div id="searchbar" :class="`font-${$store.globals.selectFont} font-bold text-s sm:text-m relative w-full`">
-                        <label for="search" class="hidden">Searchbar</label>
-                        <input type="text"
-                               name="search"
-                               placeholder="Search English"
-                               id="search"
-                               x-model="$store.globals.word"
-                               :class="[$store.globals.darkMode ? 'bg-darkmode-300' : 'bg-lightgray-100', $store.globals.setError && $store.globals.word.length === 0 ? 'border border-error' : 'border-none' ]"
-                               class="py-4 px-6 rounded-2xl w-full focus:outline-none focus:ring focus:ring-primary">
-                        <button @click="$store.globals.getWord()" class="absolute top-0 right-8 top-4 sm:top-5">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                                <path fill="none" stroke="#A445ED" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m12.663 12.663 3.887 3.887M1 7.664a6.665 6.665 0 1 0 13.33 0 6.665 6.665 0 0 0-13.33 0Z"
-                            /></svg>
-                        </button>
-                    </div>
-
-                    <!-- Error message-->
-                    <p x-cloak x-show="$store.globals.setError && $store.globals.word.length === 0" class="text-error mt-2">Whoops, can't be empty</p>
-
-                    <!-- Output-->
-
-                    <section id="output" class="mt-6 sm:mt-12" :class="`font-${$store.globals.selectFont}`">
-
-                        <!--Fetch error message-->
-                        <div class="flex flex-col gap-2 items-center transition-all transition-all duration-200 mt-32"  x-show="$store.globals.showErrorMessage" >
-                            <p class="font-inter text-m mb-6">😢</p>
-                            <p class="font-bold font-inter text-m text-darkmode-200 mb-6" x-text="$store.globals.errorMessage.title"></p>
-                            <p class="font-base font-inter text-m text-lightgray-400" x-text="$store.globals.errorMessage.message"></p>
-                            <p class="font-base font-inter text-m text-lightgray-400" x-text="$store.globals.errorMessage.resolution"></p>
+                    <div
+                        id="select-darkmode"
+                        class="flex items-center gap-2 border-l-2 border-l-lightgray-100 px-4 py-2"
+                    >
+                        <div
+                            class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in"
+                        >
+                            <input
+                                @click="$store.globals.toggleDarkmode()"
+                                type="checkbox"
+                                name="darkModeToggle"
+                                id="darkModeToggle"
+                                class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-lightgray-400 appearance-none cursor-pointer"
+                            />
+                            <label
+                                for="darkModeToggle"
+                                class="toggle-label block overflow-hidden h-5 rounded-full bg-lightgray-400 cursor-pointer"
+                            ></label>
                         </div>
+                        <div>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 22 22"
+                            >
+                                <path
+                                    fill="none"
+                                    :stroke="$store.globals.darkMode ? '#A445ED' : '#838383'"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.5"
+                                    d="M1 10.449a10.544 10.544 0 0 0 19.993 4.686C11.544 15.135 6.858 10.448 6.858 1A10.545 10.545 0 0 0 1 10.449Z"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-                        <!--Loop through words array-->
+            <main class="container mx-auto px-6 mt-6 sm:mt-14">
+                <!--Searchbar-->
 
-                        <template x-for="word in $store.globals.words">
-                                <!-- Get word key from words array -->
-                            <div>
-                                <div class="flex justify-between items-center">
-                                    <div>
-                                        <h1 x-text="word.word" class="text-xl md:text-2xl font-bold mt-6 mb-2"></h1>
-                                        <p x-text="word.phonetic" class="text-primary"></p>
-                                    </div>
-                                    <!--Play icon-->
-                                    <div>
-                                        <svg class="w-12 sm:w-20" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 75 75"><g fill="#A445ED" fill-rule="evenodd"><circle cx="37.5" cy="37.5" r="37.5" opacity=".25"/><path d="M29 27v21l21-10.5z"/></g></svg>
-                                    </div>
+                <div
+                    id="searchbar"
+                    :class="`font-${$store.globals.selectFont} font-bold text-s sm:text-m relative w-full`"
+                >
+                    <label for="search" class="hidden">Searchbar</label>
+                    <input
+                        type="text"
+                        name="search"
+                        placeholder="Search English"
+                        id="search"
+                        x-model="$store.globals.word"
+                        :class="[$store.globals.darkMode ? 'bg-darkmode-300' : 'bg-lightgray-100', $store.globals.setError && $store.globals.word.length === 0 ? 'border border-error' : 'border-none' ]"
+                        class="py-4 px-6 rounded-2xl w-full focus:outline-none focus:ring focus:ring-primary"
+                    />
+                    <button
+                        @click="$store.globals.getWord()"
+                        class="absolute top-0 right-8 top-4 sm:top-5"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 18 18"
+                        >
+                            <path
+                                fill="none"
+                                stroke="#A445ED"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.5"
+                                d="m12.663 12.663 3.887 3.887M1 7.664a6.665 6.665 0 1 0 13.33 0 6.665 6.665 0 0 0-13.33 0Z"
+                            />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Error message-->
+                <p
+                    x-cloak
+                    x-show="$store.globals.setError && $store.globals.word.length === 0"
+                    class="text-error mt-2"
+                >
+                    Whoops, can't be empty
+                </p>
+
+                <!-- Output-->
+
+                <section
+                    id="output"
+                    class="mt-6 sm:mt-12"
+                    :class="`font-${$store.globals.selectFont}`"
+                >
+                    <!--Fetch error message-->
+                    <div
+                        class="flex flex-col gap-2 items-center transition-all transition-all duration-200 mt-32"
+                        x-show="$store.globals.showErrorMessage"
+                    >
+                        <p class="font-inter text-m mb-6">😢</p>
+                        <p
+                            class="font-bold font-inter text-m text-darkmode-200 mb-6"
+                            x-text="$store.globals.errorMessage.title"
+                        ></p>
+                        <p
+                            class="font-base font-inter text-m text-lightgray-400"
+                            x-text="$store.globals.errorMessage.message"
+                        ></p>
+                        <p
+                            class="font-base font-inter text-m text-lightgray-400"
+                            x-text="$store.globals.errorMessage.resolution"
+                        ></p>
+                    </div>
+
+                    <!--Loop through words array-->
+
+                    <template x-for="word in $store.globals.words">
+                        <!-- Get word key from words array -->
+                        <div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h1
+                                        x-text="word.word"
+                                        class="text-xl md:text-2xl font-bold mt-6 mb-2"
+                                    ></h1>
+                                    <p
+                                        x-text="word.phonetic"
+                                        class="text-primary"
+                                    ></p>
                                 </div>
-                                    <div>
-                                        <!-- Loop through meanings array-->
-                                        <template x-for="meaning in word.meanings">
-                                            <div>
-                                                <div class="flex items-center gap-8 my-8">
-                                                    <h2 x-text="meaning.partOfSpeech" class="text-m font-bold italic"></h2>
-                                                    <div :class="$store.globals.darkMode ? 'bg-darkmode-100' : 'bg-lightgray-500'" class=" h-px flex-1"></div>
-                                                </div>
 
-                                                <h3 class="text-lightgray-400 text-base mb-4">Meaning</h3>
-                                                    <ul class="flex flex-col gap-3.5 text-s sm:text-m text-darkmode-200 marker:text-primary list-disc ml-4 mb-6">
+                                <!--Play icon-->
 
-                                                        <!-- Loops through definitions array -->
-
-                                                        <template x-for="definition in meaning.definitions">
-                                                            <li x-text="definition.definition" :class="$store.globals.darkMode && 'text-white'"></li>
-                                                        </template>
-                                                    </ul>
-
-
-                                                    <div>
-                                                        <template x-for="definition in meaning.definitions">
-                                                            <p x-text='definition.example ? `"${definition.example}"` : ""' class="mt-3.5 mb-4 ml-6 text-lightgray-400 italic"></p>
-                                                        </template>
-                                                    </div>
-                                            </div>
-                                        </template>
-                                    </div>
-                                <div class="flex flex-col sm:flex-row border-t py-6 gap-2">
-                                    <h4 class="text-s text-lightgray-400 underline">Source</h4>
-                                    <ul class="flex flex-col gap-2">
-                                        <template x-for="sourceUrl in word.sourceUrls">
-                                            <li class="flex gap-2">
-                                                <a :href="`${sourceUrl}`" x-text="sourceUrl" class="text-s underline text-lightgray-400" target="_blank"></a>
-                                                <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14"><path fill="none" stroke="#838383" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.09 3.545H2.456A1.455 1.455 0 0 0 1 5v6.545A1.455 1.455 0 0 0 2.455 13H9a1.455 1.455 0 0 0 1.455-1.455V7.91m-5.091.727 7.272-7.272m0 0H9m3.636 0V5"/></svg></span>
-                                            </li>
-                                        </template>
-                                    </ul>
+                                <div>
+                                    <button @click="$store.globals.playAudio()">
+                                        <svg
+                                            class="w-12 sm:w-20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 75 75"
+                                        >
+                                            <g
+                                                fill="#A445ED"
+                                                fill-rule="evenodd"
+                                            >
+                                                <circle
+                                                    cx="37.5"
+                                                    cy="37.5"
+                                                    r="37.5"
+                                                    opacity=".25"
+                                                />
+                                                <path d="M29 27v21l21-10.5z" />
+                                            </g>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
-                        </template>
-                    </section>
-                </main>
-            </div>
-            <script src="./node_modules/axios/dist/axios.min.js"></script>
+                            <div>
+                                <!-- Loop through meanings array-->
+                                <template x-for="meaning in word.meanings">
+                                    <div>
+                                        <div
+                                            class="flex items-center gap-8 my-8"
+                                        >
+                                            <h2
+                                                x-text="meaning.partOfSpeech"
+                                                class="text-m font-bold italic"
+                                            ></h2>
+                                            <div
+                                                :class="$store.globals.darkMode ? 'bg-darkmode-100' : 'bg-lightgray-500'"
+                                                class="h-px flex-1"
+                                            ></div>
+                                        </div>
+
+                                        <h3
+                                            class="text-lightgray-400 text-base mb-4"
+                                        >
+                                            Meaning
+                                        </h3>
+                                        <ul
+                                            class="flex flex-col gap-3.5 text-s sm:text-m text-darkmode-200 marker:text-primary list-disc ml-4 mb-6"
+                                        >
+                                            <!-- Loops through definitions array -->
+
+                                            <template
+                                                x-for="definition in meaning.definitions"
+                                            >
+                                                <li
+                                                    x-text="definition.definition"
+                                                    :class="$store.globals.darkMode && 'text-white'"
+                                                ></li>
+                                            </template>
+                                        </ul>
+
+                                        <div>
+                                            <template
+                                                x-for="definition in meaning.definitions"
+                                            >
+                                                <p
+                                                    x-text='definition.example ? `"${definition.example}"` : ""'
+                                                    class="mt-3.5 mb-4 ml-6 text-lightgray-400 italic"
+                                                ></p>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                            <div
+                                class="flex flex-col sm:flex-row border-t py-6 gap-2"
+                            >
+                                <h4 class="text-s text-lightgray-400 underline">
+                                    Source
+                                </h4>
+                                <ul class="flex flex-col gap-2">
+                                    <template
+                                        x-for="sourceUrl in word.sourceUrls"
+                                    >
+                                        <li class="flex gap-2">
+                                            <a
+                                                :href="`${sourceUrl}`"
+                                                x-text="sourceUrl"
+                                                class="text-s underline text-lightgray-400"
+                                                target="_blank"
+                                            ></a>
+                                            <span
+                                                ><svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 14 14"
+                                                >
+                                                    <path
+                                                        fill="none"
+                                                        stroke="#838383"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="1.5"
+                                                        d="M6.09 3.545H2.456A1.455 1.455 0 0 0 1 5v6.545A1.455 1.455 0 0 0 2.455 13H9a1.455 1.455 0 0 0 1.455-1.455V7.91m-5.091.727 7.272-7.272m0 0H9m3.636 0V5"
+                                                    /></svg
+                                            ></span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </template>
+                </section>
+            </main>
+        </div>
+        <script src="./node_modules/axios/dist/axios.min.js"></script>
         <script src="./public/script.js"></script>
     </body>
 </html>
