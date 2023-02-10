@@ -8,56 +8,62 @@ module.exports = {
       inconsolata: "'Inconsolata', monospace",
     },
     fontSize: {
-      s: ['14px', {lineHeight: '17px'}],
-      m: ['18px', {lineHeight: '24px'}],
-      l: ['20px', {lineHeight: '24px'}],
-      xl:['24px', {lineHeight: '29px'}],
-      '2xl' : ['64px', {lineHeight: '77px'}],
+      xs: ["14px", { lineHeight: "17px" }],
+      s: ["15px", { lineHeight: "24px" }],
+      m: ["18px", { lineHeight: "24px" }],
+      l: ["20px", { lineHeight: "24px" }],
+      xl: ["24px", { lineHeight: "29px" }],
+      "2xl": ["64px", { lineHeight: "77px" }],
     },
     extend: {
       colors: {
-        primary: '#A445ED',
-        error: '#FF5252',
+        primary: "#A445ED",
+        error: "#FF5252",
         darkmode: {
-          '100': '#3A3A3A',
-          '200': '#2D2D2D',
-          '300': '#1F1F1F',
-          '400': '#050505',
+          100: "#3A3A3A",
+          200: "#2D2D2D",
+          300: "#1F1F1F",
+          400: "#050505",
         },
         lightgray: {
-          '100': '#F4F4F4',
-          '200': '#3A3A3A',
-          '400': '#838383',
-          '500': '#E9E9E9'
-        }
+          100: "#F4F4F4",
+          200: "#3A3A3A",
+          400: "#838383",
+          500: "#E9E9E9",
+        },
       },
     },
   },
+
+  variants: {
+    fill: ["hover", "focus"],
+  },
+
   corePlugins: {
-    container: false
+    container: false,
   },
   plugins: [
     function ({ addComponents }) {
       addComponents({
-        '.container': {
-          maxWidth: '100%',
-          '@screen sm': {
-            maxWidth: '640px',
+        ".container": {
+          maxWidth: "100%",
+          "@screen sm": {
+            maxWidth: "640px",
           },
-          '@screen md': {
-            maxWidth: '768px',
+          "@screen md": {
+            maxWidth: "768px",
           },
-          '@screen lg': {
-            maxWidth: '740px',
+          "@screen lg": {
+            maxWidth: "740px",
           },
-          '@screen xl': {
-            maxWidth: '740px',
+          "@screen xl": {
+            maxWidth: "740px",
           },
-          '@screen 2xl': {
-            maxWidth: '740px',
+          "@screen 2xl": {
+            maxWidth: "740px",
           },
-        }
-      })
-    }
+        },
+      });
+    },
   ],
-}
+};

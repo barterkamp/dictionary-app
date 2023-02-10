@@ -85,7 +85,7 @@
 
                     <div
                         id="select-darkmode"
-                        class="flex items-center gap-2 border-l-2 border-l-lightgray-100 px-4 py-2"
+                        class="flex items-center gap-2 border-l-2 border-l-lightgray-100 pl-4 py-2"
                     >
                         <div
                             class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in"
@@ -136,13 +136,14 @@
                         name="search"
                         placeholder="Search English"
                         id="search"
+                        @keydown.enter="$store.globals.getWord()"
                         x-model="$store.globals.word"
                         :class="[$store.globals.darkMode ? 'bg-darkmode-300' : 'bg-lightgray-100', $store.globals.setError && $store.globals.word.length === 0 ? 'border border-error' : 'border-none' ]"
                         class="py-4 px-6 rounded-2xl w-full focus:outline-none focus:ring focus:ring-primary"
                     />
                     <button
                         @click="$store.globals.getWord()"
-                        class="absolute top-0 right-8 top-4 sm:top-5"
+                        class="absolute top-0 right-8 top-1/3 sm:top-5"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -179,8 +180,9 @@
                     :class="`font-${$store.globals.selectFont}`"
                 >
                     <!--Fetch error message-->
+
                     <div
-                        class="flex flex-col gap-2 items-center transition-all transition-all duration-200 mt-32"
+                        class="flex flex-col gap-2 items-center transition-all transition-all duration-200 mt-32 text-center"
                         x-show="$store.globals.showErrorMessage"
                     >
                         <p class="font-inter text-m mb-6">😢</p>
@@ -203,15 +205,15 @@
                     <template x-for="word in $store.globals.words">
                         <!-- Get word key from words array -->
                         <div>
-                            <div class="flex justify-between items-center">
+                            <div class="flex justify-between items-center mt-8">
                                 <div>
                                     <h1
                                         x-text="word.word"
-                                        class="text-xl md:text-2xl font-bold mt-6 mb-2"
+                                        class="text-xl md:text-2xl font-bold mb-2"
                                     ></h1>
                                     <p
                                         x-text="word.phonetic"
-                                        class="text-primary"
+                                        class="text-primary sm:text-xl"
                                     ></p>
                                 </div>
 
@@ -245,11 +247,11 @@
                                 <template x-for="meaning in word.meanings">
                                     <div>
                                         <div
-                                            class="flex items-center gap-8 my-8"
+                                            class="flex items-center gap-4 sm:gap-8 my-8"
                                         >
                                             <h2
                                                 x-text="meaning.partOfSpeech"
-                                                class="text-m font-bold italic"
+                                                class="text-m sm:text-xl font-bold italic"
                                             ></h2>
                                             <div
                                                 :class="$store.globals.darkMode ? 'bg-darkmode-100' : 'bg-lightgray-500'"
@@ -263,7 +265,7 @@
                                             Meaning
                                         </h3>
                                         <ul
-                                            class="flex flex-col gap-3.5 text-s sm:text-m text-darkmode-200 marker:text-primary list-disc ml-4 mb-6"
+                                            class="flex flex-col gap-3.5 text-s sm:text-m text-darkmode-200 marker:text-primary list-disc ml-8 mb-6"
                                         >
                                             <!-- Loops through definitions array -->
 
@@ -283,7 +285,7 @@
                                             >
                                                 <p
                                                     x-text='definition.example ? `"${definition.example}"` : ""'
-                                                    class="mt-3.5 mb-4 ml-6 text-lightgray-400 italic"
+                                                    class="mt-3.5 mb-4 ml-6 text-s sm:text-m text-lightgray-400 italic"
                                                 ></p>
                                             </template>
                                         </div>
@@ -293,7 +295,9 @@
                             <div
                                 class="flex flex-col sm:flex-row border-t py-6 gap-2"
                             >
-                                <h4 class="text-s text-lightgray-400 underline">
+                                <h4
+                                    class="text-xs text-lightgray-400 underline"
+                                >
                                     Source
                                 </h4>
                                 <ul class="flex flex-col gap-2">
@@ -304,7 +308,7 @@
                                             <a
                                                 :href="`${sourceUrl}`"
                                                 x-text="sourceUrl"
-                                                class="text-s underline text-lightgray-400"
+                                                class="text-xs underline text-lightgray-400"
                                                 target="_blank"
                                             ></a>
                                             <span
