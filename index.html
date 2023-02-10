@@ -75,22 +75,33 @@
 
                     <!-- Output-->
 
-                    <section id="output" class="mt-6" :class="`font-${$store.globals.selectFont}`">
+                    <section id="output" class="mt-6 sm:mt-12" :class="`font-${$store.globals.selectFont}`">
+
+                        <!--Fetch error message-->
+                        <div class="flex flex-col gap-2 items-center transition-all transition-all duration-200 mt-32"  x-show="$store.globals.showErrorMessage" >
+                            <p class="font-inter text-m mb-6">😢</p>
+                            <p class="font-bold font-inter text-m text-darkmode-200 mb-6" x-text="$store.globals.errorMessage.title"></p>
+                            <p class="font-base font-inter text-m text-lightgray-400" x-text="$store.globals.errorMessage.message"></p>
+                            <p class="font-base font-inter text-m text-lightgray-400" x-text="$store.globals.errorMessage.resolution"></p>
+                        </div>
 
                         <!--loop through words array-->
 
                         <template x-for="word in $store.globals.words">
                                 <!-- Get word key from words array -->
                             <div>
-                                <h1 x-text="word.word" class="text-xl font-bold mt-6 mb-2"></h1>
+                                <h1 x-text="word.word" class="text-xl md:text-2xl font-bold mt-6 mb-2"></h1>
                                 <p x-text="word.phonetic" class="text-primary mb-8"></p>
                                     <div>
                                         <!-- nested loop which loops through meanings array-->
                                         <template x-for="meaning in word.meanings">
                                             <div>
-                                                <h2 x-text="meaning.partOfSpeech" class="text-m font-bold italic mb-8"></h2>
+                                                <div class="flex items-center gap-8 mb-8">
+                                                    <h2 x-text="meaning.partOfSpeech" class="text-m font-bold italic "></h2>
+                                                    <div :class="$store.globals.darkMode ? 'bg-darkmode-100' : 'bg-lightgray-500'" class=" h-px flex-1"></div>
+                                                </div>
                                                 <h3 class="text-lightgray-400 text-base mb-4">Meaning</h3>
-                                                    <ul class="flex flex-col gap-3.5 text-s text-base text-darkmode-200 marker:text-primary list-disc ml-4 mb-6">
+                                                    <ul class="flex flex-col gap-3.5 text-s sm:text-m text-darkmode-200 marker:text-primary list-disc ml-4 mb-6">
                                                         <!-- nested loop which loops through definitions array -->
                                                         <template x-for="definition in meaning.definitions">
                                                             <li x-text="definition.definition" :class="$store.globals.darkMode && 'text-white'"></li>
@@ -101,8 +112,6 @@
                                                             <p x-text='definition.example ? `"${definition.example}"` : ""' class="mt-3.5 mb-4 ml-6 text-lightgray-400 italic"></p>
                                                         </template>
                                                     </div>
-
-
                                             </div>
                                         </template>
                                     </div>
