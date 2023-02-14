@@ -16,7 +16,7 @@
             <!--Header section-->
             <header class="container mx-auto mt-6 sm:mt-16 px-6 flex justify-between">
                 <!--Logo container-->
-                <div id="logo">
+                <section id="logo">
                     <svg xmlns="http://www.w3.org/2000/svg" width="34" height="38" viewBox="0 0 34 38">
                         <g fill="none" fill-rule="evenodd" stroke="#838383" stroke-linecap="round" stroke-width="1.5">
                             <path d="M1 33V5a4 4 0 0 1 4-4h26.8A1.2 1.2 0 0 1 33 2.2v26.228M5 29h28M5 37h28"/>
@@ -24,14 +24,14 @@
                             <path d="M11 9h12" />
                         </g>
                     </svg>
-                </div>
+                </section>
 
                 <!-- Selections container-->
 
-                <div id="select-container" class="flex items-center">
+                <section class="flex items-center">
                     <!-- Select fonts-->
 
-                    <div id="select-font" class="px-4">
+                    <section class="px-4">
                         <label for="fontFamilies" class="hidden">Select a font family</label>
                         <select
                             x-model="$store.globals.selectFont"
@@ -56,12 +56,11 @@
                                 Mono
                             </option>
                         </select>
-                    </div>
+                    </section>
 
                     <!--Toggle darkmode-->
 
-                    <div
-                        id="select-darkmode"
+                    <section
                         class="flex items-center gap-2 border-l-2 border-l-lightgray-100 pl-4 py-2">
                         <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
                             <input
@@ -91,8 +90,8 @@
                                     d="M1 10.449a10.544 10.544 0 0 0 19.993 4.686C11.544 15.135 6.858 10.448 6.858 1A10.545 10.545 0 0 0 1 10.449Z"/>
                             </svg>
                         </div>
-                    </div>
-                </div>
+                    </section>
+                </section>
             </header>
 
             <main class="container mx-auto px-6 mt-6 sm:mt-14">
@@ -101,8 +100,7 @@
                 <section id="searchbar" :class="`font-${$store.globals.selectFont} font-bold text-s sm:text-m relative w-full`">
                     <h2 class="sr-only">Search component</h2>
                     <label for="search" class="hidden">Searchbar</label>
-                    <input
-                        type="text"
+                    <input type="text"
                         name="search"
                         placeholder="Search English"
                         id="search"
@@ -190,13 +188,16 @@
                                 </div>
                             </div>
 
-                            <section>
-                                <h1 class="sr-only">Result of search input</h1>
+                            <article>
+                                <header>
+                                    <h1 class="sr-only">Result of search input</h1>
+                                </header>
                                 <!-- Loop through meanings array-->
                                 <template x-for="meaning in word.meanings">
                                     <div>
                                         <div class="flex items-center gap-4 sm:gap-8 my-8">
                                             <h2 x-text="meaning.partOfSpeech" class="text-m sm:text-xl font-bold italic"></h2>
+                                            <!--horizontal line-->
                                             <div :class="$store.globals.darkMode ? 'bg-darkmode-100' : 'bg-lightgray-500'"
                                                  class="h-px flex-1"></div>
                                         </div>
@@ -220,11 +221,11 @@
                                         </div>
                                     </div>
                                 </template>
-                            </section>
+                            </article>
                             <footer class="flex flex-col sm:flex-row border-t py-6 gap-2">
-                                <h4 class="text-xs text-lightgray-400 underline">
+                                <p class="text-xs text-lightgray-400 underline">
                                     Source
-                                </h4>
+                                </p>
                                 <ul class="flex flex-col gap-2">
                                     <template x-for="sourceUrl in word.sourceUrls">
                                         <li class="flex gap-2">
@@ -255,7 +256,6 @@
                 </section>
             </main>
         </div>
-<!--        <script src="node_modules/axios/dist/axios.min.js"></script>-->
         <script src="../node_modules/axios/dist/axios.min.js"></script>
         <script src="./script.js"></script>
     </body>
