@@ -36,7 +36,7 @@
                         <select
                             x-model="$store.globals.selectFont"
                             id="fontFamilies"
-                            class="font-bold text-s block p-2.5 focus:outline-none focus:ring focus:ring-primary"
+                            class="font-bold text-base block p-2.5 focus:outline-none focus:ring focus:ring-primary"
                             :class="$store.globals.darkMode ? 'bg-darkmode-400 text-white transition-all' : 'bg-white text-gray-900 transition-all'"
                             aria-label="Select a font family">
                             <option
@@ -97,7 +97,7 @@
             <main class="container mx-auto px-6 mt-6 sm:mt-14">
                 <!--Searchbar-->
 
-                <section id="searchbar" :class="`font-${$store.globals.selectFont} font-bold text-s sm:text-m relative w-full`">
+                <section id="searchbar" :class="`font-${$store.globals.selectFont}  relative w-full`">
                     <h2 class="sr-only">Search component</h2>
                     <label for="search" class="hidden">Searchbar</label>
                     <input type="text"
@@ -107,7 +107,7 @@
                         @keydown.enter="$store.globals.getWord()"
                         x-model="$store.globals.word"
                         :class="[$store.globals.darkMode ? 'bg-darkmode-300' : 'bg-lightgray-100', $store.globals.setError && $store.globals.word.length === 0 ? 'border border-error' : 'border-none' ]"
-                        class="py-4 px-6 rounded-2xl w-full focus:outline-none focus:ring focus:ring-primary"
+                        class="font-bold text-base sm:text-m py-4 px-6 rounded-2xl w-full focus:outline-none focus:ring focus:ring-primary"
                         aria-labelledby="search"/>
                     <button
                         @click="$store.globals.getWord()"
